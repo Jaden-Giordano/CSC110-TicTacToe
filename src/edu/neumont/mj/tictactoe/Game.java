@@ -12,7 +12,8 @@ public class Game {
 
     enum GameState {
         Init,
-        Play
+        Play,
+        Won
     }
 
     private Board board;
@@ -44,10 +45,32 @@ public class Game {
             flipTurn();
         }
 
+        if (getVictor() != null)
+            setState(GameState.Won);
+
         return success;
     }
 
-    public Player getVictor() {
+    public Type getTypeAtSquare(int x, int y) {
+        try {
+            Square s = board.getSquare(x, y);
+            return s.getType();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            return null;
+        }
+    }
+
+    public Type getTurn() {
+        return turn;
+    }
+
+    public GameState getState() {
+        return state;
+    }
+
+    private Player getVictor() {
         switch (board.getVictor()) {
             case X:
                 return playerOne;
@@ -57,15 +80,15 @@ public class Game {
         return null;
     }
 
-    public void flipTurn() {
+    private void flipTurn() {
         turn = (turn == Type.X)?Type.O:Type.X;
     }
 
-    public void setTurn(Type turn) {
+    private void setTurn(Type turn) {
         this.turn = turn;
     }
 
-    public Player getCurrentPlayer() {
+    private Player getCurrentPlayer() {
         switch (turn) {
             case X:
                 return playerOne;
@@ -75,11 +98,7 @@ public class Game {
         return null;
     }
 
-    public GameState getState() {
-        return state;
-    }
-
-    public void setState(GameState state) {
+    private void setState(GameState state) {
         this.state = state;
     }
 
