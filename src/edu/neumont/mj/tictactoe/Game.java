@@ -1,7 +1,9 @@
 package edu.neumont.mj.tictactoe;
 
-import edu.neumont.mj.tictactoe.enums.Turn;
+import edu.neumont.mj.tictactoe.enums.Type;
 import edu.neumont.mj.tictactoe.helpers.BoardHelper;
+import edu.neumont.mj.tictactoe.player.PlayablePlayer;
+import edu.neumont.mj.tictactoe.player.Player;
 
 /**
  * Created by Jaden-Laptop on 11/6/2016.
@@ -18,7 +20,7 @@ public class Game {
     private Player playerOne;
     private Player playerTwo;
 
-    private Turn turn;
+    private Type turn;
 
     private GameState state;
 
@@ -28,11 +30,8 @@ public class Game {
 
     public void startPlayerVPlayer() {
         board = BoardHelper.generateNewEmptyBoard();
-        playerOne = new PlayablePlayer();
-        playerOne.setTurn(Turn.X);
-        playerTwo = new PlayablePlayer();
-        playerTwo.setTurn(Turn.O);
-        setTurn(Turn.X);
+        playerOne = new PlayablePlayer(Type.X);
+        playerTwo = new PlayablePlayer(Type.O);
         setState(GameState.Play);
     }
 
@@ -59,10 +58,10 @@ public class Game {
     }
 
     public void flipTurn() {
-        turn = (turn == Turn.X)?Turn.O:Turn.X;
+        turn = (turn == Type.X)?Type.O:Type.X;
     }
 
-    public void setTurn(Turn turn) {
+    public void setTurn(Type turn) {
         this.turn = turn;
     }
 
