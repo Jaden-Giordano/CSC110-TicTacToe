@@ -1,6 +1,7 @@
-package edu.neumont.mj.tictactoe.enums;
+package edu.neumont.mj.tictactoe;
 
 import edu.neumont.mj.tictactoe.Board;
+import edu.neumont.mj.tictactoe.enums.Type;
 
 /**
  * Created by Jaden-Laptop on 11/6/2016.

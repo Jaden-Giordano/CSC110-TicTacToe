@@ -1,7 +1,7 @@
 package edu.neumont.mj.tictactoe.helpers;
 
 import edu.neumont.mj.tictactoe.Board;
-import edu.neumont.mj.tictactoe.enums.Square;
+import edu.neumont.mj.tictactoe.Square;
 
 /**
  * Created by Jaden-Laptop on 11/6/2016.
