@@ -36,6 +36,10 @@ public class Game {
         setState(GameState.Play);
     }
 
+    public void startPlayerVAI() {
+
+    }
+
     public boolean attemptPlaceTile(Location l) {
         if ((l.x > 2 || l.x < 0) || (l.y > 2 || l.y < 0))
             return false;

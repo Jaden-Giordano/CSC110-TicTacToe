@@ -40,6 +40,10 @@ public class AIPlayer extends Player {
         return difficulty;
     }
 
+//    private Location getSurroundedPoint() {
+//
+//    }
+
     private boolean shouldMakeStupidMove() {
         switch (difficulty) {
             case Easy:

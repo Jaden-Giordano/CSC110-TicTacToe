@@ -36,14 +36,13 @@ public class Board {
             }
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-        } finally {
-            return false;
         }
+        return false;
     }
 
     public Type getVictor() {
         if (squares == null)
-            return null;
+            return Type.Empty;
 
         boolean row0 = countHorizontalSimilar(getSquare(new Location()), 0) == 2;
         boolean row1 = countHorizontalSimilar(getSquare(new Location(0, 1)), 0) == 2;
@@ -64,7 +63,21 @@ public class Board {
         if (column2)
             return getSquare(new Location(2, 0)).getType();
 
-        return null;
+        return Type.Empty;
+    }
+
+    public Location getEmptySquare(int count) {
+        int cCount = 0;
+        Location empty = null;
+        for (int i = 0; i < squares.length && cCount <= count; i++) {
+            for (int j = 0; j < squares[i].length && cCount <= count; j++) {
+                if (getSquare(new Location(i, j)).getType() == Type.Empty) {
+                    empty = new Location(i, j);
+                    cCount = count+1;
+                }
+            }
+        }
+        return empty;
     }
 
     private int countHorizontalSimilar(Square s, int heuristic) {
