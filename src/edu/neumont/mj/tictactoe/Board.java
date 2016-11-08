@@ -17,19 +17,19 @@ public class Board {
         this.squares = squares;
     }
 
-    public Square getSquare(int x, int y) {
-        if ((x > 2 || x < 0) || (y > 2 || y < 0))
+    public Square getSquare(Location l) {
+        if ((l.x > 2 || l.x < 0) || (l.y > 2 || l.y < 0))
             throw new IllegalArgumentException("Tile selection out of bounds.");
 
         if (squares == null)
             return null;
 
-        return squares[x][y];
+        return squares[l.x][l.y];
     }
 
-    public boolean attemptPlaceTile(int x, int y, Type turn) {
+    public boolean attemptPlaceTile(Location l, Type turn) {
         try  {
-            Square s = getSquare(x, y);
+            Square s = getSquare(l);
             if (s.getType() == Type.Empty) {
                 s.setType(turn);
                 return true;
@@ -45,33 +45,34 @@ public class Board {
         if (squares == null)
             return null;
 
-        boolean row0 = countHorizontalSimilar(getSquare(0, 0), 0) == 2;
-        boolean row1 = countHorizontalSimilar(getSquare(0, 1), 0) == 2;
-        boolean row2 = countHorizontalSimilar(getSquare(0, 2), 0) == 2;
-        boolean column0 = countVerticalSimilar(getSquare(0, 0), 0) == 2;
-        boolean column1 = countHorizontalSimilar(getSquare(1, 0), 0) == 2;
-        boolean column2 = countVerticalSimilar(getSquare(2, 0), 0) == 2;
-        boolean diagonal = countDiagonalSimilar(getSquare(0, 0), 0) == 2;
+        boolean row0 = countHorizontalSimilar(getSquare(new Location()), 0) == 2;
+        boolean row1 = countHorizontalSimilar(getSquare(new Location(0, 1)), 0) == 2;
+        boolean row2 = countHorizontalSimilar(getSquare(new Location(0, 2)), 0) == 2;
+        boolean column0 = countVerticalSimilar(getSquare(new Location(0, 0)), 0) == 2;
+        boolean column1 = countHorizontalSimilar(getSquare(new Location(1, 0)), 0) == 2;
+        boolean column2 = countVerticalSimilar(getSquare(new Location(2, 0)), 0) == 2;
+        boolean diagonal = countDiagonalSimilar(getSquare(new Location(0, 0)), 0) == 2;
 
         if (row0 || column0 || diagonal)
-            return getSquare(0, 0).getType();
+            return getSquare(new Location(0, 0)).getType();
         if (row1)
-            return getSquare(0, 1).getType();
+            return getSquare(new Location(0, 1)).getType();
         if (row2)
-            return getSquare(0, 2).getType();
+            return getSquare(new Location(0, 2)).getType();
         if (column1)
-            return getSquare(1, 0).getType();
+            return getSquare(new Location(1, 0)).getType();
         if (column2)
-            return getSquare(2, 0).getType();
+            return getSquare(new Location(2, 0)).getType();
 
         return null;
     }
 
     private int countHorizontalSimilar(Square s, int heuristic) {
-        if (s.getXPosition() == 2)
+        Location l = s.getLocation();
+        if (l.x == 2)
             return heuristic;
         else {
-            Square adjacent = getSquare(s.getXPosition()+1, s.getYPosition());
+            Square adjacent = getSquare(l.add(new Location(1, 0)));
             if (adjacent.getType() == s.getType()) {
                 int nHeu = heuristic + 1;
                 return countHorizontalSimilar(adjacent, nHeu);
@@ -82,10 +83,11 @@ public class Board {
     }
 
     private int countVerticalSimilar(Square s, int heuristic) {
-        if (s.getYPosition() == 2)
+        Location l = s.getLocation();
+        if (l.y == 2)
             return heuristic;
         else {
-            Square adjacent = getSquare(s.getXPosition(), s.getYPosition()+1);
+            Square adjacent = getSquare(l.add(new Location(0, 1)));
             if (adjacent.getType() == s.getType()) {
                 int nHeu = heuristic + 1;
                 return countVerticalSimilar(adjacent, nHeu);
@@ -96,10 +98,11 @@ public class Board {
     }
 
     private int countDiagonalSimilar(Square s, int heuristic) {
-        if (s.getYPosition() == 2 || s.getXPosition() == 2)
+        Location l = s.getLocation();
+        if (l.x == 2 || l.y == 2)
             return heuristic;
         else {
-            Square adjacent = getSquare(s.getXPosition()+1, s.getYPosition()+1);
+            Square adjacent = getSquare(l.add(new Location(1, 1)));
             if (adjacent.getType() == s.getType()) {
                 int nHeu = heuristic + 1;
                 return countDiagonalSimilar(adjacent, nHeu);

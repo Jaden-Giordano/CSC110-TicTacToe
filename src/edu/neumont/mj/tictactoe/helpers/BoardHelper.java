@@ -12,7 +12,7 @@ public class BoardHelper {
         Board b = new Board();
         Square[][] squares = new Square[3][3];
         for (int i = 0; i < squares.length; i++) {
-            for (int j = 0; i < squares[i].length; j++) {
+            for (int j = 0; j < squares[i].length; j++) {
                 squares[i][j] = new Square(b, i, j);
             }
         }

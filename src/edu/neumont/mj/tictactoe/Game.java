@@ -31,16 +31,16 @@ public class Game {
 
     public void startPlayerVPlayer() {
         board = BoardHelper.generateNewEmptyBoard();
-        playerOne = new PlayablePlayer(Type.X);
-        playerTwo = new PlayablePlayer(Type.O);
+        playerOne = new PlayablePlayer(this, Type.X);
+        playerTwo = new PlayablePlayer(this, Type.O);
         setState(GameState.Play);
     }
 
-    public boolean attemptPlaceTile(int x, int y) {
-        if ((x > 2 || x < 0) || (y > 2 || y < 0))
+    public boolean attemptPlaceTile(Location l) {
+        if ((l.x > 2 || l.x < 0) || (l.y > 2 || l.y < 0))
             return false;
 
-        boolean success = board.attemptPlaceTile(x, y, turn);
+        boolean success = board.attemptPlaceTile(l, turn);
         if (success) {
             flipTurn();
         }
@@ -51,15 +51,14 @@ public class Game {
         return success;
     }
 
-    public Type getTypeAtSquare(int x, int y) {
+    public Type getTypeAtSquare(Location l) {
         try {
-            Square s = board.getSquare(x, y);
+            Square s = board.getSquare(l);
             return s.getType();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
-        } finally {
-            return null;
         }
+        return null;
     }
 
     public Type getTurn() {

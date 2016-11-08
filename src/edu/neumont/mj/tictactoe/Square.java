@@ -10,15 +10,14 @@ public class Square {
     private Type type;
 
     private Board board;
-    private int x, y;
+    private Location location;
 
-    public Square(Board board, int x, int y) {
+    public Square(Board board, Location location) {
         this.type = Type.Empty;
 
         this.board = board;
 
-        this.x = x;
-        this.y = y;
+        this.location = location;
     }
 
     public Type getType() {
@@ -33,12 +32,8 @@ public class Square {
         return true;
     }
 
-    public int getXPosition() {
-        return this.x;
-    }
-
-    public int getYPosition() {
-        return this.y;
+    public Location getLocation() {
+        return location;
     }
 
 }

@@ -1,5 +1,6 @@
 package edu.neumont.mj.tictactoe.player;
 
+import edu.neumont.mj.tictactoe.Game;
 import edu.neumont.mj.tictactoe.enums.Type;
 
 /**
@@ -7,8 +8,8 @@ import edu.neumont.mj.tictactoe.enums.Type;
  */
 public class PlayablePlayer extends Player {
 
-    public PlayablePlayer(Type turn) {
-        super(turn);
+    public PlayablePlayer(Game game, Type turn) {
+        super(game, turn);
     }
 
 }
