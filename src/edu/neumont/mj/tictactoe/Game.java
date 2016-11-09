@@ -1,5 +1,6 @@
 package edu.neumont.mj.tictactoe;
 
+import edu.neumont.mj.tictactoe.enums.GameState;
 import edu.neumont.mj.tictactoe.enums.Type;
 import edu.neumont.mj.tictactoe.helpers.BoardHelper;
 import edu.neumont.mj.tictactoe.player.PlayablePlayer;
@@ -9,12 +10,6 @@ import edu.neumont.mj.tictactoe.player.Player;
  * Created by Jaden-Laptop on 11/6/2016.
  */
 public class Game {
-
-    enum GameState {
-        Init,
-        Play,
-        Won
-    }
 
     private Board board;
 
@@ -33,6 +28,7 @@ public class Game {
         board = BoardHelper.generateNewEmptyBoard();
         playerOne = new PlayablePlayer(this, Type.X);
         playerTwo = new PlayablePlayer(this, Type.O);
+        setTurn(Type.X);
         setState(GameState.Play);
     }
 
@@ -45,9 +41,8 @@ public class Game {
             return false;
 
         boolean success = board.attemptPlaceTile(l, turn);
-        if (success) {
+        if (success)
             flipTurn();
-        }
 
         if (getVictor() != null)
             setState(GameState.Won);
@@ -63,6 +58,10 @@ public class Game {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public Type getVictorType() {
+        return getVictor().getTurn();
     }
 
     public Type getTurn() {

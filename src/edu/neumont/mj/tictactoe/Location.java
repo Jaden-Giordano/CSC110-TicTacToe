@@ -67,4 +67,8 @@ public class Location {
         return divide(this, b);
     }
 
+    public String toString() {
+        return "Location: ("+x+", "+y+")";
+    }
+
 }

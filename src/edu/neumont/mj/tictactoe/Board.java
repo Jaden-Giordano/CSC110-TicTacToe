@@ -44,24 +44,24 @@ public class Board {
         if (squares == null)
             return Type.Empty;
 
-        boolean row0 = countHorizontalSimilar(getSquare(new Location()), 0) == 2;
-        boolean row1 = countHorizontalSimilar(getSquare(new Location(0, 1)), 0) == 2;
-        boolean row2 = countHorizontalSimilar(getSquare(new Location(0, 2)), 0) == 2;
-        boolean column0 = countVerticalSimilar(getSquare(new Location(0, 0)), 0) == 2;
-        boolean column1 = countHorizontalSimilar(getSquare(new Location(1, 0)), 0) == 2;
-        boolean column2 = countVerticalSimilar(getSquare(new Location(2, 0)), 0) == 2;
-        boolean diagonal = countDiagonalSimilar(getSquare(new Location(0, 0)), 0) == 2;
+        boolean row0 = countHorizontalSimilar(getSquare(Location.TOP_LEFT), 0) == 2;
+        boolean row1 = countHorizontalSimilar(getSquare(Location.MIDDLE_LEFT), 0) == 2;
+        boolean row2 = countHorizontalSimilar(getSquare(Location.BOTTOM_LEFT), 0) == 2;
+        boolean column0 = countVerticalSimilar(getSquare(Location.TOP_LEFT), 0) == 2;
+        boolean column1 = countVerticalSimilar(getSquare(Location.TOP_MIDDLE), 0) == 2;
+        boolean column2 = countVerticalSimilar(getSquare(Location.TOP_RIGHT), 0) == 2;
+        boolean diagonal = countDiagonalSimilar(getSquare(Location.TOP_LEFT), 0) == 2;
 
         if (row0 || column0 || diagonal)
-            return getSquare(new Location(0, 0)).getType();
+            return getSquare(Location.TOP_LEFT).getType();
         if (row1)
-            return getSquare(new Location(0, 1)).getType();
+            return getSquare(Location.MIDDLE_LEFT).getType();
         if (row2)
-            return getSquare(new Location(0, 2)).getType();
+            return getSquare(Location.BOTTOM_LEFT).getType();
         if (column1)
-            return getSquare(new Location(1, 0)).getType();
+            return getSquare(Location.TOP_MIDDLE).getType();
         if (column2)
-            return getSquare(new Location(2, 0)).getType();
+            return getSquare(Location.TOP_RIGHT).getType();
 
         return Type.Empty;
     }
@@ -82,11 +82,11 @@ public class Board {
 
     private int countHorizontalSimilar(Square s, int heuristic) {
         Location l = s.getLocation();
-        if (l.x == 2)
+        if (l.x == 2 || heuristic == 2)
             return heuristic;
         else {
             Square adjacent = getSquare(l.add(new Location(1, 0)));
-            if (adjacent.getType() == s.getType()) {
+            if (adjacent.getType() == s.getType() && (s.getType() != Type.Empty && adjacent.getType() != Type.Empty)) {
                 int nHeu = heuristic + 1;
                 return countHorizontalSimilar(adjacent, nHeu);
             } else {
@@ -101,7 +101,7 @@ public class Board {
             return heuristic;
         else {
             Square adjacent = getSquare(l.add(new Location(0, 1)));
-            if (adjacent.getType() == s.getType()) {
+            if (adjacent.getType() == s.getType() && (s.getType() != Type.Empty && adjacent.getType() != Type.Empty)) {
                 int nHeu = heuristic + 1;
                 return countVerticalSimilar(adjacent, nHeu);
             } else {
@@ -116,13 +116,25 @@ public class Board {
             return heuristic;
         else {
             Square adjacent = getSquare(l.add(new Location(1, 1)));
-            if (adjacent.getType() == s.getType()) {
+            if (adjacent.getType() == s.getType() && (s.getType() != Type.Empty && adjacent.getType() != Type.Empty)) {
                 int nHeu = heuristic + 1;
                 return countDiagonalSimilar(adjacent, nHeu);
             } else {
                 return heuristic;
             }
         }
+    }
+
+    public String toString() {
+        String sBoard = "";
+        for (int i = 0; i < 3; i++) {
+            sBoard += getSquare(new Location(0, i)).toString();
+            for (int j = 1; j < 3; j++) {
+                String s = " | " + getSquare(new Location(j, i)).toString();
+                sBoard += s;
+            }
+        }
+        return sBoard;
     }
 
 }

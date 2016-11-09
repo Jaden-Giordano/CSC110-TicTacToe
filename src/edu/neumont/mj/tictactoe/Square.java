@@ -36,4 +36,8 @@ public class Square {
         return location;
     }
 
+    public String toString() {
+        return "Square: {Type: "+getType()+", Location: "+getLocation().toString()+"}";
+    }
+
 }
